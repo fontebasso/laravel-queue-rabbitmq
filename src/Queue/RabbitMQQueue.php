@@ -62,7 +62,7 @@ class RabbitMQQueue extends Queue implements QueueContract, RabbitMQQueueContrac
     /**
      * Holds the Configuration
      */
-    protected QueueConfig $config;
+    protected $config;
 
     /**
      * RabbitMQQueue constructor.
@@ -735,8 +735,11 @@ class RabbitMQQueue extends Queue implements QueueContract, RabbitMQQueueContrac
         return [$destination, $exchange, $exchangeType, $attempts];
     }
 
-    protected function getConfig(): QueueConfig
+    protected function getConfig()
     {
+        if(is_array($this->config)) {
+            return QueueConfigFactory::make($this->config);
+        }
         return $this->config;
     }
 
